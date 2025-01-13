@@ -2,7 +2,7 @@
 Lightning WordPress theme, Copyright (C) 2015-2025 Vektor,Inc.
 Lightning WordPress theme is licensed under the GPL.
 Tested up to: 6.7
-Stable tag: 15.29.3
+Stable tag: 15.29.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,8 +35,15 @@ vk-develop@vektor-inc.co.jp
 
 == Changelog ==
 
+v15.29.4
+[ G3 ][ Design Bug Fix ] Excluded child elements from expanding to full content width when the parent has the `.is-layout-flex` class by adding a `:not` selector.
+[ G3 ][ Bug fix ] Fix block width on editor with narrow screen.
+[ G3 / G2 ][ Specification Change ] Update VK Mobile Nav 0.3.3
+[ G3 / G2 ][ Specification Change ] Update VK Components 1.6.5
+
 v15.29.3
 [ Bug fix ][ G3 ] Fix prev next design on post page.
+
 
 v15.29.2
 [ Specification Change ] Load vk-component from composer.

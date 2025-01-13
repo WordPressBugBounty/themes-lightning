@@ -203,17 +203,17 @@
         },
         {
             "name": "vektor-inc/vk-component",
-            "version": "0.0.18",
-            "version_normalized": "0.0.18.0",
+            "version": "1.6.5",
+            "version_normalized": "1.6.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vektor-inc/vk-components.git",
-                "reference": "a779655d9fe55d3866eb99d43b654c6ef9c16171"
+                "reference": "a40838c62957501db9bf250ca9b67a021c4b33d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vektor-inc/vk-components/zipball/a779655d9fe55d3866eb99d43b654c6ef9c16171",
-                "reference": "a779655d9fe55d3866eb99d43b654c6ef9c16171",
+                "url": "https://api.github.com/repos/vektor-inc/vk-components/zipball/a40838c62957501db9bf250ca9b67a021c4b33d5",
+                "reference": "a40838c62957501db9bf250ca9b67a021c4b33d5",
                 "shasum": ""
             },
             "require": {
@@ -223,7 +223,7 @@
                 "wp-phpunit/wp-phpunit": "^6.7",
                 "yoast/phpunit-polyfills": "^3.0"
             },
-            "time": "2024-12-26T00:59:47+00:00",
+            "time": "2025-01-01T02:17:35+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -244,30 +244,31 @@
             "description": "Vektor Component",
             "support": {
                 "issues": "https://github.com/vektor-inc/vk-components/issues",
-                "source": "https://github.com/vektor-inc/vk-components/tree/0.0.18"
+                "source": "https://github.com/vektor-inc/vk-components/tree/1.6.5"
             },
             "install-path": "../vektor-inc/vk-component"
         },
         {
             "name": "vektor-inc/vk-css-optimize",
-            "version": "0.2.2",
-            "version_normalized": "0.2.2.0",
+            "version": "0.2.5",
+            "version_normalized": "0.2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vektor-inc/vk-css-optimize.git",
-                "reference": "a7b2d30b9b54db80e0706c15f9a8005786e35335"
+                "reference": "36675e369a72e29564e4b0ba00dec960726d2a34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vektor-inc/vk-css-optimize/zipball/a7b2d30b9b54db80e0706c15f9a8005786e35335",
-                "reference": "a7b2d30b9b54db80e0706c15f9a8005786e35335",
+                "url": "https://api.github.com/repos/vektor-inc/vk-css-optimize/zipball/36675e369a72e29564e4b0ba00dec960726d2a34",
+                "reference": "36675e369a72e29564e4b0ba00dec960726d2a34",
                 "shasum": ""
             },
             "require-dev": {
+                "doctrine/instantiator": "^1.5",
                 "wp-phpunit/wp-phpunit": "^5.4",
                 "yoast/phpunit-polyfills": "^1.1.0"
             },
-            "time": "2024-02-07T09:07:23+00:00",
+            "time": "2024-09-25T13:57:01+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -288,7 +289,7 @@
             "description": "WordPress CSS Optimize",
             "support": {
                 "issues": "https://github.com/vektor-inc/vk-css-optimize/issues",
-                "source": "https://github.com/vektor-inc/vk-css-optimize/tree/0.2.2"
+                "source": "https://github.com/vektor-inc/vk-css-optimize/tree/0.2.5"
             },
             "install-path": "../vektor-inc/vk-css-optimize"
         },

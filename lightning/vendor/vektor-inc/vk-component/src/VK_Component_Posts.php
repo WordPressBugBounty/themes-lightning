@@ -3,7 +3,7 @@
  * VK Components Posts
  *
  * @package VektorInc\VK_Component
- * @version 1.6.4
+ * @version 1.6.5
  */
 namespace VektorInc\VK_Component;
 
@@ -14,7 +14,7 @@ use VektorInc\VK_Term_Color\VkTermColor;
  */
 class VK_Component_Posts {
 
-	const VK_COMPONENTS_VERSION = '1.6.4';
+	const VK_COMPONENTS_VERSION = '1.6.5';
 
 	public static function init() {
 
@@ -57,7 +57,7 @@ class VK_Component_Posts {
 	 * @param string $style_id style id.
 	 */
 	public static function register_style( $style_id = 'vk-components-style' ) {
-		wp_register_style( $style_id, plugin_dir_url( __FILE__ )  . '/assets/css/vk-components.css', array(), self::VK_COMPONENTS_VERSION );
+		wp_register_style( $style_id, plugin_dir_url( __FILE__ ) . '/assets/css/vk-components.css', array(), self::VK_COMPONENTS_VERSION );
 	}
 
 
@@ -960,7 +960,7 @@ class VK_Component_Posts {
 				'class' => 'postListText_singleTermLabel_inner',
 				'link'  => true,
 			);
-			if ( method_exists( 'VkTermColor', 'get_single_term_with_color' ) ) {
+			if ( method_exists( 'VektorInc\VK_Term_Color\VkTermColor', 'get_single_term_with_color' ) ) {
 				$html .= VkTermColor::get_single_term_with_color( $post, $term_args );
 			}
 			$html .= '</span>';
@@ -1031,4 +1031,3 @@ class VK_Component_Posts {
 		return $col_class;
 	}
 }
-
