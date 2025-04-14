@@ -2,7 +2,7 @@
 Lightning WordPress theme, Copyright (C) 2015-2025 Vektor,Inc.
 Lightning WordPress theme is licensed under the GPL.
 Tested up to: 6.7
-Stable tag: 15.29.4
+Stable tag: 15.29.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,11 @@ The theme built by Vektor,Inc.
 vk-develop@vektor-inc.co.jp
 
 == Changelog ==
+
+v15.29.5
+[ G3 ][ Bug Fix ] Fix an issue where an unintended margin appears in the navigation block when it is placed inside a .container.
+[ G3 ][ Bug fix ] Adjusting the unintentional vertical margins between blocks in the editor
+[ G3 / G2 ] Cope with plugin Booking Package 
 
 v15.29.4
 [ G3 ][ Design Bug Fix ] Excluded child elements from expanding to full content width when the parent has the `.is-layout-flex` class by adding a `:not` selector.
