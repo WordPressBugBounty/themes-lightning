@@ -1,8 +1,8 @@
 === Lightning ===
 Lightning WordPress theme, Copyright (C) 2015-2025 Vektor,Inc.
 Lightning WordPress theme is licensed under the GPL.
-Tested up to: 6.7
-Stable tag: 15.29.7
+Tested up to: 6.8
+Stable tag: 15.29.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,10 @@ The theme built by Vektor,Inc.
 vk-develop@vektor-inc.co.jp
 
 == Changelog ==
+
+v15.29.8
+[ G3 ][ Design bug fix ] Fixed the missing top border on the first post in the archive view.
+[ G3 / G2 ][ Bug fix ] Fixed an issue where the site became G2 if a post was saved before saving the customizer settings on a new site.
 
 v15.29.7
 [ G3 ][ Bug fix ] Fix LTG_G3_Slider call in index.php: add class_exists check and change render() to display_html().
