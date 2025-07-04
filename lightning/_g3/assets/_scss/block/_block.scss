@@ -21,9 +21,7 @@
 }
 
 .wp-block-image {
-	&:where(:not(.alignfull,.alignwide)) {
-		max-width: 100%;
-	}
+	max-width: 100%;
 	/* 編集画面専用 */
 	.components-resizable-box__container {
 		max-width: 100%;
