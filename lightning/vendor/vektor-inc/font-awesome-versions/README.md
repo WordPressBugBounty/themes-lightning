@@ -90,6 +90,20 @@ $icon_description = VkFontAwesomeVersions::get_icon_tag( 'fa-regular fa-envelope
 
 ---
 
+0.6.3
+- [ 仕様変更 ] Font Awesome 6.6.0 に更新
+- [ 仕様変更 ] Font Awesome 6 アイコン選択時のリンク先を更新
+
+0.6.2
+- font awesome アイコンデータデータ再度更新
+
+0.6.1
+- .woff2 もバイナリである事を明示
+
+0.6.0
+- [ 仕様変更 ] Font Awesome 6.5.2 に更新
+- [ その他 ] .gitattributes 追加
+
 0.5.0
 - [ 仕様変更 ] Font Awesome 5 は削除して Font Awesome 6 に自動移行
 - [ 仕様変更 ] Font Awesome 6.4.2 に更新

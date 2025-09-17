@@ -2,7 +2,7 @@
 Lightning WordPress theme, Copyright (C) 2015-2025 Vektor,Inc.
 Lightning WordPress theme is licensed under the GPL.
 Tested up to: 6.8
-Stable tag: 15.30.1
+Stable tag: 15.30.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,10 @@ The theme built by Vektor,Inc.
 vk-develop@vektor-inc.co.jp
 
 == Changelog ==
+
+v15.30.2
+[ Bug fix ] Fix link to FontAwesome icon list to correctly point to the free icons page.
+[ G2 ][ Bug fix ] Fix mobile navi error on widget scrren.
 
 v15.30.1
 [ G3 ][ Bug fix ] Fix an issue where embedding posts from the same site into each other causes the blog card process to enter an infinite loop, resulting in a memory overflow error.
