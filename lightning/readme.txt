@@ -2,7 +2,7 @@
 Lightning WordPress theme, Copyright (C) 2015-2025 Vektor,Inc.
 Lightning WordPress theme is licensed under the GPL.
 Tested up to: 6.8
-Stable tag: 15.30.3
+Stable tag: 15.30.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,10 @@ The theme built by Vektor,Inc.
 vk-develop@vektor-inc.co.jp
 
 == Changelog ==
+
+v15.30.4
+[ G3 ][ Bug fix ] Fixed an issue where the footer was obscured by the mobile fixed navigation when using Block Template Parts and Mobile Fixed Nav together in the G3 Pro Unit
+[ G3 ][ Bug fix ] Remove unintended spacing in the Query Loop post template in the editor
 
 v15.30.3
 [ G3 ][ Bug fix ] Fix an issue where page anchor links are hidden behind a fixed header.
