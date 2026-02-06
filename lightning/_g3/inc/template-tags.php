@@ -322,14 +322,14 @@ function lightning_get_entry_meta( $options = array() ) {
 
 		if ( $option['published'] ) {
 			$html .= '<span class="entry-meta-item entry-meta-item-date">
-			<i class="far fa-calendar-alt"></i>
+			<i class="fa-solid fa-calendar-days"></i>
 			<span class="published">' . esc_html( get_the_date() ) . '</span>
 			</span>';
 		}
 
 		if ( $option['updated'] ) {
 			$html .= '<span class="entry-meta-item entry-meta-item-updated">
-			<i class="fas fa-history"></i>
+			<i class="fa-solid fa-clock-rotate-left"></i>
 			<span class="screen-reader-text">' . __( 'Last updated', 'lightning' ) . ' : </span>
 			<span class="updated">' . get_the_modified_date( '' ) . '</span>
 			</span>';
@@ -338,15 +338,17 @@ function lightning_get_entry_meta( $options = array() ) {
 		if ( $option['author_name'] || $option['author_image'] ) {
 			// Post author
 			// For post type where author does not exist.
-			// get_the_author() がページヘッダーで呼び出された時に効かないので、取得失敗した場合は一度 the_post() で取得する.
+			// get_the_author() がページヘッダーで呼び出された時に効かないので、取得失敗した場合はグローバル $post オブジェクトから直接取得する.
 			$author = get_the_author();
 			if ( ! $author ) {
-				if ( have_posts() ) :
-					while ( have_posts() ) :
-						the_post();
-						$author = get_the_author();
-					endwhile;
-				endif;
+				global $post;
+				if ( $post && ! empty( $post->post_author ) ) {
+					$author_data = get_userdata( $post->post_author );
+					if ( $author_data ) {
+						$author = $author_data->display_name;
+					}
+				}
+
 			}
 			if ( $author ) {
 				$meta_hidden_author = ( ! empty( $options['postAuthor_hidden'] ) ) ? ' entry-meta_hidden' : '';

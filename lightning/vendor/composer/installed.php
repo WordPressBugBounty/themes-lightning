@@ -3,7 +3,7 @@
         'name' => 'vektor-inc/lightning',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'f55f663beced00d2388558931949a8db98871be4',
+        'reference' => '0e0f2fb7666b4c01437e13a33397c4f7d8cdb501',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'vektor-inc/font-awesome-versions' => array(
-            'pretty_version' => '0.6.3',
-            'version' => '0.6.3.0',
-            'reference' => '2f839c995c88d9f862841547450d500565b80212',
+            'pretty_version' => '0.7.0',
+            'version' => '0.7.0.0',
+            'reference' => '58b525c70d052a4e040619dfe944d646d42416f9',
             'type' => 'library',
             'install_path' => __DIR__ . '/../vektor-inc/font-awesome-versions',
             'aliases' => array(),
@@ -22,7 +22,7 @@
         'vektor-inc/lightning' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'f55f663beced00d2388558931949a8db98871be4',
+            'reference' => '0e0f2fb7666b4c01437e13a33397c4f7d8cdb501',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

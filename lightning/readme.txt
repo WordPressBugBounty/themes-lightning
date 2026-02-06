@@ -1,8 +1,8 @@
 === Lightning ===
-Lightning WordPress theme, Copyright (C) 2015-2025 Vektor,Inc.
+Lightning WordPress theme, Copyright (C) 2015-2026 Vektor,Inc.
 Lightning WordPress theme is licensed under the GPL.
-Tested up to: 6.8
-Stable tag: 15.30.4
+Tested up to: 6.9
+Stable tag: 15.33.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,33 @@ The theme built by Vektor,Inc.
 vk-develop@vektor-inc.co.jp
 
 == Changelog ==
+
+v15.33.1
+[ G3/G2 ] Compatible for Font Awesome 7.0
+
+v15.33.0
+[ G3/G2 ] Update Font Awesome versions 6.3 -> 7.0
+
+v15.32.4
+[ G3 ] Adjust the display of the Contact Form 7 block in the editor
+
+v15.32.3
+[ G3 ][ Bug fix ] Fixed header layout shift when scrolled.
+[ G3 ][ Bug fix ] Fixed a memory overflow error caused by an infinite loop under certain conditions.
+
+v15.32.2
+[ G2 ][ Bug fix ] Fixed an issue where full-width elements inside a content-width block were not displaying as full width.
+
+v15.32.1
+[ G3 ][ Bug fix ] Fix PHP Warning on the BuddyPress / bbPress Profile Page.
+[ G3 ][ Bug fix ] Fix the PHP security issue on the bbPress Profile Page.
+[ G3 ][ Other ] Delete unnecessary code.
+
+v15.32.0
+[ G3 ][ Bug fix ] Fix the layout issue with full-width and wide-width elements when using the two-column layout mode.
+
+v15.31.0
+[ G3 ][ Other ] Cope with content half width column ( VK Blocks )
 
 v15.30.4
 [ G3 ][ Bug fix ] Fixed an issue where the footer was obscured by the mobile fixed navigation when using Block Template Parts and Mobile Fixed Nav together in the G3 Pro Unit
