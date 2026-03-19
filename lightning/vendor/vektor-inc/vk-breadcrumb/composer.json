@@ -14,10 +14,10 @@
 		}
 	],
 	"require": {
-		"vektor-inc/vk-helpers": "^0.0.3"
+		"vektor-inc/vk-helpers": "^0.2.1"
 	},
 	"require-dev": {
 		"wp-phpunit/wp-phpunit": "^5.4",
-		"yoast/phpunit-polyfills": "^1.0"
+		"yoast/phpunit-polyfills": "^2.0"
 	}
 }

@@ -31,6 +31,13 @@ VkSwiper::enqueue_swiper();
 
 ## Change log
 
+= 0.3.6 =
+* [ Fix ] WP_CONTENT_DIR / WP_CONTENT_URL / WP_PLUGIN_DIR 等をカスタマイズした環境でもリソースが正しく読み込まれるように get_directory_uri() を改善
+
+* [ Update ] Update Swiper 11.1.5
+
+* [ Update ] Update Swiper 11.1.4
+
 = 0.3.4 =
 * [ Update ] Update Swiper 11.0.2
 
