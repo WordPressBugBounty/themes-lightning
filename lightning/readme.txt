@@ -2,6 +2,7 @@
 Lightning WordPress theme, Copyright (C) 2015-2026 Vektor,Inc.
 Lightning WordPress theme is licensed under the GPL.
 Tested up to: 6.9
+Stable tag: 15.35.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +34,13 @@ The theme built by Vektor,Inc.
 vk-develop@vektor-inc.co.jp
 
 == Changelog ==
+
+v15.35.0
+[ G3/G2 ][ Bug fix ] Fix block editor save failure on posts with legacy design settings saved by plugins or older versions.
+[ G3/G2 ][ Specification change ] Migrate meta box to block editor native sidebar panel for WordPress 7.0 RTC (Real-Time Collaboration) compatibility.
+[ G2 ][ Bug fix ] Fix an issue where global navigation background color, hover color, and separator were not correctly inherited due to a typo in SCSS variables (inhelit → inherit)
+[ G2 ][ Design Bug Fix ] Fix text overlap in VK Blocks block margin UI buttons caused by Bootstrap's line-height: inherit inheriting line-height: 0 from the Gutenberg editor toolbar
+[ G2 ][ Design Bug Fix ] Fix WooCommerce cart button icon display issue when Font Awesome 7 is used
 
 v15.34.1
 [ G3 ][ Bug fix ] Fix Fatal Error when The Events Calendar plugin is active due to VkHelpers constructor becoming private in vk-helpers 0.2.1
