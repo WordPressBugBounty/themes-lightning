@@ -11,7 +11,7 @@ class ComposerStaticInitd3f98371a35f9c8c9b9a1ef4b4fc3895
     );
 
     public static $prefixLengthsPsr4 = array (
-        'V' =>
+        'V' => 
         array (
             'VektorInc\\VK_Term_Color\\' => 24,
             'VektorInc\\VK_Swiper\\' => 20,
@@ -25,35 +25,35 @@ class ComposerStaticInitd3f98371a35f9c8c9b9a1ef4b4fc3895
     );
 
     public static $prefixDirsPsr4 = array (
-        'VektorInc\\VK_Term_Color\\' =>
+        'VektorInc\\VK_Term_Color\\' => 
         array (
             0 => __DIR__ . '/..' . '/vektor-inc/vk-term-color/src',
         ),
-        'VektorInc\\VK_Swiper\\' =>
+        'VektorInc\\VK_Swiper\\' => 
         array (
             0 => __DIR__ . '/..' . '/vektor-inc/vk-swiper/src',
         ),
-        'VektorInc\\VK_Helpers\\' =>
+        'VektorInc\\VK_Helpers\\' => 
         array (
             0 => __DIR__ . '/..' . '/vektor-inc/vk-helpers/src',
         ),
-        'VektorInc\\VK_Font_Awesome_Versions\\' =>
+        'VektorInc\\VK_Font_Awesome_Versions\\' => 
         array (
             0 => __DIR__ . '/..' . '/vektor-inc/font-awesome-versions/src',
         ),
-        'VektorInc\\VK_Component\\' =>
+        'VektorInc\\VK_Component\\' => 
         array (
             0 => __DIR__ . '/..' . '/vektor-inc/vk-component/src',
         ),
-        'VektorInc\\VK_Color_Palette_Manager\\' =>
+        'VektorInc\\VK_Color_Palette_Manager\\' => 
         array (
             0 => __DIR__ . '/..' . '/vektor-inc/vk-color-palette-manager/src',
         ),
-        'VektorInc\\VK_CSS_Optimize\\' =>
+        'VektorInc\\VK_CSS_Optimize\\' => 
         array (
             0 => __DIR__ . '/..' . '/vektor-inc/vk-css-optimize/src',
         ),
-        'VektorInc\\VK_Breadcrumb\\' =>
+        'VektorInc\\VK_Breadcrumb\\' => 
         array (
             0 => __DIR__ . '/..' . '/vektor-inc/vk-breadcrumb/src',
         ),

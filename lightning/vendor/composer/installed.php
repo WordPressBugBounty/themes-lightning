@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'vektor-inc/lightning',
-        'pretty_version' => '15.35.0',
-        'version' => '15.35.0.0',
-        'reference' => 'bfaf7d5cda72e0e11a724634c0178247937bd15d',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '65639843b40891893e883e36b4c881f618ea9679',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'vektor-inc/lightning' => array(
-            'pretty_version' => '15.35.0',
-            'version' => '15.35.0.0',
-            'reference' => 'bfaf7d5cda72e0e11a724634c0178247937bd15d',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '65639843b40891893e883e36b4c881f618ea9679',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
