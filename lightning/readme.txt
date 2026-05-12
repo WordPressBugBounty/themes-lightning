@@ -2,7 +2,7 @@
 Lightning WordPress theme, Copyright (C) 2015-2026 Vektor,Inc.
 Lightning WordPress theme is licensed under the GPL.
 Tested up to: 6.9
-Stable tag: 15.35.2
+Stable tag: 15.35.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,9 @@ The theme built by Vektor,Inc.
 vk-develop@vektor-inc.co.jp
 
 == Changelog ==
+
+v15.35.3
+[ G3 ][ Bug Fix ] Fix double arrow display in Snow Monkey Forms select box caused by Lightning's SVG background-image arrow conflicting with Snow Monkey Forms' own toggle arrow
 
 v15.35.2
 [ G2 ][ Bug Fix ] Fix initial `scroll` listener registered with `capture: true` not being removed by `remove_header` because `removeEventListener` used `capture: false`, leaving duplicated `scroll` listeners attached after in-page anchor clicks (#1333)
