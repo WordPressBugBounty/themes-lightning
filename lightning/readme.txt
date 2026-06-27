@@ -2,7 +2,7 @@
 Lightning WordPress theme, Copyright (C) 2015-2026 Vektor,Inc.
 Lightning WordPress theme is licensed under the GPL.
 Tested up to: 6.9
-Stable tag: 15.36.0
+Stable tag: 15.37.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,14 @@ The theme built by Vektor,Inc.
 vk-develop@vektor-inc.co.jp
 
 == Changelog ==
+
+v15.37.1
+[ Other ] Change theme screenshot
+
+v15.37.0
+[ Spec Change ] Update vektor-inc/vk-component from 1.6.5 to 1.7.0
+[ Spec Change ] Update vektor-inc/font-awesome-versions from 0.7.2 to 0.7.4
+[ G3 ][ Design Bug Fix ] Fix global nav sub-menu acc-btn to be vertically centered when item title wraps to multiple lines (#724)
 
 v15.36.0
 [ G2/G3 ][ Specification Change ] Migrate vk-helpers from bundled copy to composer-managed vektor-inc/vk-helpers ^0.3.0, resolving interference with plugins that require vk-helpers 0.3.0+. (#1343)
