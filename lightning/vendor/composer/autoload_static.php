@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitef2616a52684110b1da6879b0edf521a
+class ComposerStaticInitee22aa11296e8828cf47c0f66563bd34
 {
     public static $files = array (
         '1da19160abd5b3e6a79694bf03550dff' => __DIR__ . '/..' . '/vektor-inc/vk-helpers/src/VK_Custom_Html_Control.php',
@@ -13,7 +13,7 @@ class ComposerStaticInitef2616a52684110b1da6879b0edf521a
     );
 
     public static $prefixLengthsPsr4 = array (
-        'V' =>
+        'V' => 
         array (
             'VektorInc\\VK_Term_Color\\' => 24,
             'VektorInc\\VK_Swiper\\' => 20,
@@ -27,35 +27,35 @@ class ComposerStaticInitef2616a52684110b1da6879b0edf521a
     );
 
     public static $prefixDirsPsr4 = array (
-        'VektorInc\\VK_Term_Color\\' =>
+        'VektorInc\\VK_Term_Color\\' => 
         array (
             0 => __DIR__ . '/..' . '/vektor-inc/vk-term-color/src',
         ),
-        'VektorInc\\VK_Swiper\\' =>
+        'VektorInc\\VK_Swiper\\' => 
         array (
             0 => __DIR__ . '/..' . '/vektor-inc/vk-swiper/src',
         ),
-        'VektorInc\\VK_Helpers\\' =>
+        'VektorInc\\VK_Helpers\\' => 
         array (
             0 => __DIR__ . '/..' . '/vektor-inc/vk-helpers/src',
         ),
-        'VektorInc\\VK_Font_Awesome_Versions\\' =>
+        'VektorInc\\VK_Font_Awesome_Versions\\' => 
         array (
             0 => __DIR__ . '/..' . '/vektor-inc/font-awesome-versions/src',
         ),
-        'VektorInc\\VK_Component\\' =>
+        'VektorInc\\VK_Component\\' => 
         array (
             0 => __DIR__ . '/..' . '/vektor-inc/vk-component/src',
         ),
-        'VektorInc\\VK_Color_Palette_Manager\\' =>
+        'VektorInc\\VK_Color_Palette_Manager\\' => 
         array (
             0 => __DIR__ . '/..' . '/vektor-inc/vk-color-palette-manager/src',
         ),
-        'VektorInc\\VK_CSS_Optimize\\' =>
+        'VektorInc\\VK_CSS_Optimize\\' => 
         array (
             0 => __DIR__ . '/..' . '/vektor-inc/vk-css-optimize/src',
         ),
-        'VektorInc\\VK_Breadcrumb\\' =>
+        'VektorInc\\VK_Breadcrumb\\' => 
         array (
             0 => __DIR__ . '/..' . '/vektor-inc/vk-breadcrumb/src',
         ),
@@ -80,9 +80,9 @@ class ComposerStaticInitef2616a52684110b1da6879b0edf521a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitef2616a52684110b1da6879b0edf521a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitef2616a52684110b1da6879b0edf521a::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitef2616a52684110b1da6879b0edf521a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitee22aa11296e8828cf47c0f66563bd34::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitee22aa11296e8828cf47c0f66563bd34::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitee22aa11296e8828cf47c0f66563bd34::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -100,40 +100,6 @@ class LTG_Theme_Full_Wide_Title extends WP_Widget {
 				<input type="hidden" class="__id" name="<?php echo $this->get_field_name( 'media_image_id' ); ?>" value="<?php echo esc_attr( $options['media_image_id'] ); ?>" />
 			</div>
 		</div>
-		<script type="text/javascript">
-			// Register background image
-			if ( vk_title_bg_image_addiditional == undefined ){
-				var vk_title_bg_image_addiditional = function(e){
-					// Preview area div
-					var d=jQuery(e).parent().children("._display");
-					// Input tag of save image id.
-					var w=jQuery(e).parent().children("._form").children('.__id')[0];
-					var u=wp.media({library:{type:'image'},multiple:false}).on('select', function(e){
-						u.state().get('selection').each(function(f){
-							d.children().remove();
-							d.append(jQuery('<img style="width:100%;mheight:auto">').attr('src',f.toJSON().url));
-							jQuery(w).val(f.toJSON().id).change();
-						});
-					});
-					u.open();
-				};
-			}
-			// Function of Delete background image
-			if ( vk_title_bg_image_delete == undefined ){
-				var vk_title_bg_image_delete = function(e){
-					// Preview area div
-					var d=jQuery(e).parent().children("._display");
-						// Input tag of save image id.
-					var w=jQuery(e).parent().children("._form").children('.__id')[0];
-
-					// Delete tag of preview img.
-					d.children().remove();
-					// w.attr("value","");
-					jQuery(e).parent().children("._form").children('.__id').attr("value","").change();
-				};
-			}
-		</script>
-
 		<?php
 
 		// Shadow Use
@@ -169,7 +135,7 @@ class LTG_Theme_Full_Wide_Title extends WP_Widget {
 		$instance['title_font_color']   = sanitize_hex_color( $new_instance['title_font_color'] );
 		$instance['title']              = wp_kses_post( $new_instance['title'] );
 		$instance['text']               = wp_kses_post( $new_instance['text'] );
-		$instance['title_shadow_use']   = ( $new_instance['title_shadow_use'] ) ? true : false;
+		$instance['title_shadow_use']   = ( ! empty( $new_instance['title_shadow_use'] ) ) ? true : false;
 		$instance['title_shadow_color'] = sanitize_hex_color( $new_instance['title_shadow_color'] );
 		$instance['margin_top']         = esc_attr( $new_instance['margin_top'] );
 		$instance['margin_bottom']      = esc_attr( $new_instance['margin_bottom'] );
@@ -251,7 +217,9 @@ class LTG_Theme_Full_Wide_Title extends WP_Widget {
 			$widget_outer_style .= 'margin-bottom:0px;background-repeat:no-repeat;';
 		}
 
-		if ( $widget_outer_style ) {
+		// ブロック版ウィジェット編集画面のプレビューでは widget_id が $args に含まれず渡ってくるため、
+		// 未設定の場合はインラインCSSの出力をスキップして PHP の Undefined array key 警告を防ぐ。
+		if ( $widget_outer_style && ! empty( $args['widget_id'] ) ) {
 			$dynamic_css = '#' . $args['widget_id'] . '.widget {' . $widget_outer_style . '}';
 			// $dynamic_css = trim( $dynamic_css );
 			// // convert tab and br to space
@@ -282,4 +250,24 @@ class LTG_Theme_Full_Wide_Title extends WP_Widget {
 add_action( 'widgets_init', 'lightning_unit_widget_register_full_wide_title' );
 function lightning_unit_widget_register_full_wide_title() {
 	return register_widget( 'LTG_Theme_Full_Wide_Title' );
+}
+
+add_action( 'admin_enqueue_scripts', 'ltg_full_wide_title_admin_enqueue' );
+/**
+ * ウィジェット管理画面でメディアライブラリ用スクリプトを読み込む
+ *
+ * @param string $hook 現在の管理画面のフック名。
+ */
+function ltg_full_wide_title_admin_enqueue( $hook ) {
+	if ( ! in_array( $hook, array( 'widgets.php', 'customize.php' ), true ) ) {
+		return;
+	}
+	wp_enqueue_media();
+	wp_enqueue_script(
+		'ltg-widget-image-admin',
+		get_template_directory_uri() . '/assets/js/admin-widget.js',
+		array( 'jquery' ),
+		'1.0.0',
+		true
+	);
 }
