@@ -3,7 +3,7 @@
         'name' => 'vektor-inc/lightning',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '66652be4b1fabdad571f8fc95ce9b47801cce995',
+        'reference' => 'e7c2dc61fbefbc751988def60137514a9b4301f2',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'vektor-inc/font-awesome-versions' => array(
-            'pretty_version' => '0.7.5',
-            'version' => '0.7.5.0',
-            'reference' => '0f13392629e0af4b6595c5dca59c65d9e854780c',
+            'pretty_version' => '0.7.6',
+            'version' => '0.7.6.0',
+            'reference' => '3c48955fe9d1d76756e729224341164d085a7e09',
             'type' => 'library',
             'install_path' => __DIR__ . '/../vektor-inc/font-awesome-versions',
             'aliases' => array(),
@@ -22,7 +22,7 @@
         'vektor-inc/lightning' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '66652be4b1fabdad571f8fc95ce9b47801cce995',
+            'reference' => 'e7c2dc61fbefbc751988def60137514a9b4301f2',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -83,9 +83,9 @@
             'dev_requirement' => false,
         ),
         'vektor-inc/vk-swiper' => array(
-            'pretty_version' => '0.4.0',
-            'version' => '0.4.0.0',
-            'reference' => 'aa8d0d90251426f5d14fb2c317f2c2fba703a374',
+            'pretty_version' => '0.4.1',
+            'version' => '0.4.1.0',
+            'reference' => '47273ce2c13edb2a729a686c264e22a75866f7c6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../vektor-inc/vk-swiper',
             'aliases' => array(),
