@@ -2,7 +2,7 @@
 Lightning WordPress theme, Copyright (C) 2015-2026 Vektor,Inc.
 Lightning WordPress theme is licensed under the GPL.
 Tested up to: 6.9
-Stable tag: 15.39.0
+Stable tag: 15.39.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,9 @@ The theme built by Vektor,Inc.
 vk-develop@vektor-inc.co.jp
 
 == Changelog ==
+
+v15.39.1
+[ G2/G3 ][ Bug Fix ] Fix the bundled Bootstrap 4 responsive classes (.col-md-*, .d-md-none, .navbar-expand-md, spacing utilities and so on) switching one step earlier than the rest of the theme at exactly 576 / 768 / 992 / 1200px, by rewriting the Bootstrap breakpoint mixins to range syntax
 
 v15.39.0
 [ G2/G3 ][ New Feature ] Add lightning_get_breakpoint() / lightning_the_breakpoint() and the lightning_breakpoints filter, so the responsive breakpoints are defined in one place and can be overridden
