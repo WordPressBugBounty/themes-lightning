@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitb03b991b2792227bc8b5a7bd549a9120
+class ComposerStaticInitdcbccfd39d3ca82be6445a8cca4a899c
 {
     public static $files = array (
         '1da19160abd5b3e6a79694bf03550dff' => __DIR__ . '/..' . '/vektor-inc/vk-helpers/src/VK_Custom_Html_Control.php',
@@ -80,9 +80,9 @@ class ComposerStaticInitb03b991b2792227bc8b5a7bd549a9120
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitb03b991b2792227bc8b5a7bd549a9120::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitb03b991b2792227bc8b5a7bd549a9120::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitb03b991b2792227bc8b5a7bd549a9120::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitdcbccfd39d3ca82be6445a8cca4a899c::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitdcbccfd39d3ca82be6445a8cca4a899c::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitdcbccfd39d3ca82be6445a8cca4a899c::$classMap;
 
         }, null, ClassLoader::class);
     }
