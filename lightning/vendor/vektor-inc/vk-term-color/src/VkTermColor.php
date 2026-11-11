@@ -34,7 +34,15 @@ class VkTermColor {
 		$locale = ( is_admin() && function_exists( 'get_user_locale' ) ) ? get_user_locale() : get_locale();
 		load_textdomain( 'vk-term-color', dirname( __FILE__ ) . '/languages/' . 'vk-term-color-' . $locale . '.mo' );
 
-		add_action( 'init', array( __CLASS__, 'term_meta_color' ) );
+		/*
+		 * init の実行中に init() が呼ばれると、同じ init へ追加したコールバックは今回走らない.
+		 * その場合はここで register_meta() する.
+		 */
+		if ( did_action( 'init' ) ) {
+			self::term_meta_color();
+		} else {
+			add_action( 'init', array( __CLASS__, 'term_meta_color' ) );
+		}
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_enqueue_scripts' ) );
 
 		// カラーピッカーを追加するタクソノミー.
@@ -57,7 +65,7 @@ class VkTermColor {
 	 * @return void
 	 */
 	public static function term_meta_color() {
-		register_meta( 'term', 'term_color', array( 'sanitize_callback', array( __CLASS__, 'sanitize_hex' ) ) );
+		register_meta( 'term', 'term_color', array( 'sanitize_callback' => array( __CLASS__, 'sanitize_hex' ) ) );
 	}
 
 	/**
@@ -68,8 +76,12 @@ class VkTermColor {
 	 */
 	public static function sanitize_hex( $color ) {
 		// sanitize_hex_color() は undefined function くらう.
+		// update_term_meta() は配列などの非文字列値も受け付けるため、ltrim() に渡す前に弾く.
+		if ( ! is_string( $color ) ) {
+			return '';
+		}
 		$color = ltrim( $color, '#' );
-		return preg_match( '/^([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $color ) ? $color : '';
+		return preg_match( '/^([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})\z/', $color ) ? $color : '';
 	}
 
 	/**
@@ -120,6 +132,13 @@ class VkTermColor {
 	public static function save_term_meta_color( $term_id ) {
 
 		if ( ! isset( $_POST['term_color_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['term_color_nonce'] ) ), basename( __FILE__ ) ) ) {
+			return;
+		}
+
+		// nonce の検証はリクエストが同一ユーザー自身の操作であることの確認に過ぎず、
+		// そのユーザーが対象タームを編集する権限を持つかは別に確認が必要（get_term_color_taxonomies() が返す
+		// タクソノミーごとに必要な capability が異なるため、taxonomy 非依存の edit_term メタ capability で判定する）.
+		if ( ! current_user_can( 'edit_term', $term_id ) ) {
 			return;
 		}
 
@@ -207,7 +226,8 @@ class VkTermColor {
 				$color = '#ffffff';
 			}
 
-			$out = sprintf( '<span class="color-block" style="background:%s;">&nbsp;</span>', esc_attr( $color ) );
+			$text_color = self::get_dynamic_text_color( $color );
+			$out = sprintf( '<span class="color-block" style="background:%s;color:%s;">&nbsp;</span>', esc_attr( $color ), esc_attr( $text_color ) );
 		}
 
 		return $out;
@@ -337,7 +357,8 @@ class VkTermColor {
 
 		if ( $args['color'] ) {
 			$term_color = self::get_term_color( $term->term_id );
-			$term_color = ( $term_color ) ? ' style="color:#fff;background-color:' . $term_color . '"' : '';
+			$text_color = self::get_dynamic_text_color( $term_color );
+			$term_color = ( $term_color ) ? ' style="color:' . esc_attr( $text_color ) . ';background-color:' . esc_attr( $term_color ) . '"' : '';
 		} else {
 			$term_color = '';
 		}
@@ -377,8 +398,11 @@ class VkTermColor {
 	 * @return string .
 	 */
 	public static function get_auto_post_single_term_html( $post = '', $args = array() ) {
+		// 投稿ID・投稿オブジェクト・未指定（グローバルの投稿を使用）のいずれでも WP_Post に正規化する.
+		// グローバルの投稿が存在しない場合（ループ外・404ページ等）は null になる.
+		$post = get_post( $post );
 		if ( ! $post ) {
-			global $post;
+			return '';
 		}
 
 		$args_default = array(
@@ -390,7 +414,10 @@ class VkTermColor {
 		);
 		$args         = wp_parse_args( $args, $args_default );
 
-		$taxonomies = get_the_taxonomies();
+		// タクソノミー自動検出.
+		// 引数を省略すると get_the_taxonomies() はグローバルの投稿を見るため、
+		// 正規化済みの $post を明示的に渡す（グローバルの投稿が無い場合に自動検出できなくなるのを防ぐ）.
+		$taxonomies = get_the_taxonomies( $post );
 		$taxonomies = self::get_display_taxonomies_exclusion( $taxonomies, array( 'post_tag', 'product_type' ) );
 
 
@@ -399,9 +426,12 @@ class VkTermColor {
 			// get $taxonomy name.
 			$taxonomy = key( $taxonomies );
 			$terms    = get_the_terms( $post->ID, $taxonomy );
-			if ( ! empty( $terms[0] ) ) {
-				$single_term_with_color = self::get_post_single_term_html( $terms[0], $args );
+			// 登録されていない taxonomy の場合 get_the_terms() は WP_Error を返すため、
+			// empty() だけでは弾けず配列添字アクセスで致命的エラーになる. is_wp_error() も判定する.
+			if ( is_wp_error( $terms ) || empty( $terms[0] ) ) {
+				return $single_term_with_color;
 			}
+			$single_term_with_color = self::get_post_single_term_html( $terms[0], $args );
 		}
 		return $single_term_with_color;
 	}
@@ -417,8 +447,11 @@ class VkTermColor {
 	 * @return void
 	 */
 	public static function get_single_term_with_color( $post = '', $args = array() ) {
+		// 投稿ID・投稿オブジェクト・未指定（グローバルの投稿を使用）のいずれでも WP_Post に正規化する.
+		// グローバルの投稿が存在しない場合（ループ外・404ページ等）は null になる.
+		$post = get_post( $post );
 		if ( ! $post ) {
-			global $post;
+			return;
 		}
 
 		$args_default = array(
@@ -441,13 +474,16 @@ class VkTermColor {
 			// 取得するタームのタクソノミーを指定したい場合はフックで指定
 			$taxonomy = apply_filters( 'vk_term_color_taxonomy', key( $taxonomies ) );
 			$terms    = get_the_terms( $post->ID, $taxonomy );
-			if ( ! $terms ) {
+			// 登録されていない taxonomy の場合 get_the_terms() は WP_Error を返すため、
+			// ! $terms だけでは弾けず配列添字アクセスで致命的エラーになる. is_wp_error() も判定する.
+			if ( is_wp_error( $terms ) || ! $terms ) {
 				return;
 			}
 			$term_name  = esc_html( $terms[0]->name );
 			$term_url   = esc_url( get_term_link( $terms[0]->term_id, $taxonomy ) );
-			$term_color = self::get_term_color( $terms[0]->term_id );
-			$term_color = ( $term_color ) ? ' style="color:#fff;background-color:' . $term_color . '"' : '';
+			$term_color_code = self::get_term_color( $terms[0]->term_id );
+			$text_color = self::get_dynamic_text_color( $term_color_code );
+			$term_color = ( $term_color_code ) ? ' style="color:' . esc_attr( $text_color ) . ';background-color:' . esc_attr( $term_color_code ) . '"' : '';
 
 			if ( $args['link'] ) {
 				$single_term_with_color .= '<a' . $outer_class . $term_color . ' href="' . esc_url( $term_url ) . '">';
@@ -491,8 +527,11 @@ class VkTermColor {
 	 */
 	public static function get_post_terms_html( $post = '', $args = array() ) {
 
+		// 投稿ID・投稿オブジェクト・未指定（グローバルの投稿を使用）のいずれでも WP_Post に正規化する.
+		// グローバルの投稿が存在しない場合（ループ外・404ページ等）は null になる.
+		$post = get_post( $post );
 		if ( ! $post ) {
-			global $post;
+			return;
 		}
 
 		$args_default = array(
@@ -510,9 +549,11 @@ class VkTermColor {
 		$args         = wp_parse_args( $args, $args_default );
 
 		// タクソノミー指定がない場合に自動検出.
+		// 引数を省略すると get_the_taxonomies() はグローバルの投稿を見るため、
+		// 正規化済みの $post を明示的に渡す（グローバルの投稿が無い場合に自動検出できなくなるのを防ぐ）.
 		$taxonomy = '';
 		if ( empty( $args['taxonomy'] ) ) {
-			$taxonomies = get_the_taxonomies();
+			$taxonomies = get_the_taxonomies( $post );
 			if ( $taxonomies ) {
 				// get $taxonomy name.
 				$taxonomy = key( $taxonomies );
@@ -584,26 +625,45 @@ class VkTermColor {
 	}
 
 	/**
-	 * Hex値を受け取りテキスト色を判定する
+	 * 背景色（Hex値）を受け取り、視認性の高い文字色（黒 or 白）を自動判定する
 	 *
-	 * @param [type] $rgb
-	 * @return void
+	 * @param mixed $hex 背景色のカラーコード（'#ffffff' 等の6桁、'#fff' 等の3桁。# は無くてもよい）.
+	 * @return string #000000 または #FFFFFF.
 	 */
-	public static function get_dynamic_text_color($hex) {
+	public static function get_dynamic_text_color( $hex ) {
 
-		$hex = str_replace("#", "", $hex);
-	
-		// 3桁の場合は6桁に変換
-		if (strlen($hex) == 3) {
+		// term_color_default_custom フィルターの実装ミス（return忘れでnullになる等）で
+		// 文字列以外（null・配列・数値等）が渡ることがあるため、文字列関数に渡す前に弾く.
+		// 不正な値のフォールバック先は、このプラグインの既定背景色 #999999 を渡した場合と
+		// 同じ判定結果（#FFFFFF）にそろえている.
+		if ( ! is_string( $hex ) ) {
+			return '#FFFFFF';
+		}
+
+		// str_replace( '#', '', $hex ) だと文字列中の # を全て除去してしまい、
+		// '#F#F#F' のような途中に # を含む壊れた値が 'FFF' になって後続の桁数チェックを
+		// すり抜けてしまう（CodeRabbit 指摘）. 除去するのは先頭の # 1個だけにする.
+		if ( '#' === substr( $hex, 0, 1 ) ) {
+			$hex = substr( $hex, 1 );
+		}
+
+		// 3桁・6桁以外（4桁等の桁数不正）や、16進数として解釈できない文字列（'red' 等）も
+		// 同様に弾く（4桁のまま substr() すると青成分が0扱いになり誤判定するため、桁数チェックが必須）.
+		if ( ! preg_match( '/^(?:[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})\z/', $hex ) ) {
+			return '#FFFFFF';
+		}
+
+		// 3桁の場合は6桁に変換.
+		if ( 3 === strlen( $hex ) ) {
 			$hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
 		}
-	
-		// 16進数からRGB値に変換
-		$r = hexdec(substr($hex, 0, 2));
-		$g = hexdec(substr($hex, 2, 2));
-		$b = hexdec(substr($hex, 4, 2));	
 
-		$yiq = (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+		// 16進数からRGB値に変換.
+		$r = hexdec( substr( $hex, 0, 2 ) );
+		$g = hexdec( substr( $hex, 2, 2 ) );
+		$b = hexdec( substr( $hex, 4, 2 ) );
+
+		$yiq = ( ( $r * 299 ) + ( $g * 587 ) + ( $b * 114 ) ) / 1000;
 		return $yiq >= 156 ? '#000000' : '#FFFFFF';
 	}
 

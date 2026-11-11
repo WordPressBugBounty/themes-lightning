@@ -31,6 +31,21 @@ $args = array(
 echo VkTermColor::get_post_terms_html( '', $args );
 ```
 
+```
+use VektorInc\VK_Term_Color\VkTermColor;
+
+global $post;
+$args = array(
+	'taxonomy' => 'area', // 対象のタクソノミーを指定
+);
+if ( class_exists( VkTermColor::class ) && method_exists( VkTermColor::class, 'get_post_single_term_info' ) ) {
+	$term_info = VkTermColor::get_post_single_term_info( $post, $args );
+	echo '<pre style="text-align:left">';
+	print_r( $term_info );
+	echo '</pre>';
+}
+```
+
 ## PHPUnit
 ```
 composer install
@@ -39,6 +54,23 @@ npm run phpunit
 ```
 
 ## Change log
+
+0.7.4
+* 単一のタームをラベル表示する際（自動検出・通常表示）、対象の投稿が渡されずループの外（404ページ等）から呼び出すと警告（Warning）が出る不具合を修正
+* 分類（タクソノミー）を指定して投稿のタームをまとめて表示する際、対象の投稿が渡されずループの外（404ページ等）から呼び出すと警告（Warning）が出る不具合を修正
+* カテゴリーなどの分類（タクソノミー）を取得できない状態になると、ラベルを表示しているページが真っ白になる不具合を修正
+* 0.7.3 で変更したカテゴリーラベルの文字色（黒/白）の判定方法を、0.7.2 までの方法に戻す
+* カテゴリーの色に色コード以外の値（未設定のnullや配列など）が入っていても、PHPの警告が出たり表示が止まったりしないよう文字色の自動判定処理に入力確認を追加
+
+0.7.3
+* ターム色の保存処理に、対象タームを編集する権限があるかどうかの確認（current_user_can）を追加
+* カテゴリーの背景色に対して自動で選ばれる文字色（黒/白）の判定方法を、コントラスト比を実際に計算して選ぶ方式に改善。読みにくい組み合わせが残っていた中間的な明るさの背景色にも対応
+
+0.7.2
+* 投稿のカテゴリーにて背景色に合わせて動的にテキスト色を決める get_dynamic_text_color() を適用
+* Composer 経由で配布した際、開発用ファイルが vendor/ に含まれないよう .gitattributes を追加
+* ターム色の保存時検証が動くよう、register_meta() の sanitize_callback を連想配列キーで登録する。init の途中で読み込まれた場合もその場で登録する
+* ターム色の16進数検証で、末尾に改行を付けた値も誤って許可されてしまう不備を修正。表示箇所のエスケープも強化
 
 0.7.1
 * 背景色に合わせて 動的にテキスト色を決める get_dynamic_text_color() を追加

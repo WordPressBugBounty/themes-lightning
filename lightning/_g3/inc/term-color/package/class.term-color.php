@@ -13,7 +13,17 @@ if ( ! class_exists( 'Vk_term_color' ) ) {
 		 * Construct
 		 */
 		public function __construct() {
-			add_action( 'init', array( $this, 'term_meta_color' ) );
+			/*
+			  このファイルは init 実行中に読み込まれる（term-color-config.php 側の
+			  add_action( 'init', ... ) 経由）ため、ここで同じ init へ add_action しても
+			  今回の init では実行されない。did_action( 'init' ) で分岐し、その場合は
+			  その場で実行する。
+			*/
+			if ( did_action( 'init' ) ) {
+				self::term_meta_color();
+			} else {
+				add_action( 'init', array( __CLASS__, 'term_meta_color' ) );
+			}
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
 			/********************************************
@@ -39,7 +49,7 @@ if ( ! class_exists( 'Vk_term_color' ) ) {
 		 * @return void
 		 */
 		public static function term_meta_color() {
-			register_meta( 'term', 'term_color', array( __CLASS__, 'sanitize_hex' ) );
+			register_meta( 'term', 'term_color', array( 'sanitize_callback' => array( __CLASS__, 'sanitize_hex' ) ) );
 		}
 
 		/**
@@ -50,8 +60,12 @@ if ( ! class_exists( 'Vk_term_color' ) ) {
 		 */
 		public static function sanitize_hex( $color ) {
 			// sanitize_hex_color() は undefined function くらう.
+			// 配列などの非文字列値を ltrim() に渡す前に弾き、型エラーを防ぐ.
+			if ( ! is_string( $color ) ) {
+				return '';
+			}
 			$color = ltrim( $color, '#' );
-			return preg_match( '/([A-Fa-f0-9]{3}){1,2}$/', $color ) ? $color : '';
+			return preg_match( '/^([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})\z/', $color ) ? $color : '';
 		}
 
 		/**
@@ -93,21 +107,30 @@ if ( ! class_exists( 'Vk_term_color' ) ) {
 
 		/**
 		 * カラーの保存処理
-		 * Save extra taxonomy fields callback function.
+		 * nonce とタームの編集権限を確認したうえで、送信された色を整形して保存する.
 		 *
 		 * @param int $term_id : term id.
 		 * @return void
 		 */
 		public static function save_term_meta_color( $term_id ) {
 
-			// verify the nonce --- remove if you don't care.
-			if ( ! isset( $_POST['term_color_nonce'] ) || ! wp_verify_nonce( $_POST['term_color_nonce'], basename( __FILE__ ) ) ) {
+			// nonce の確認.
+			if ( ! isset( $_POST['term_color_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['term_color_nonce'] ) ), basename( __FILE__ ) ) ) {
+				return;
+			}
+
+			// 権限の確認（このタームを編集できる利用者だけが保存できる）.
+			// get_term_color_taxonomies() が返すタクソノミーごとに必要な capability が異なるため、
+			// タクソノミーに依存しない edit_term メタ capability で判定する.
+			if ( ! current_user_can( 'edit_term', $term_id ) ) {
 				return;
 			}
 
 			if ( isset( $_POST['term_color'] ) ) {
 				$now_value = get_term_meta( $term_id, 'term_color', true );
-				$new_value = esc_html( wp_unslash( $_POST['term_color'] ) );
+				// 配列など文字列以外が送信されても警告を出さず空文字にする（esc_html() は配列で警告が出る）.
+				// 16進数以外の値は register_meta() の sanitize_callback（sanitize_hex）が保存時に空文字へ落とす.
+				$new_value = sanitize_text_field( wp_unslash( $_POST['term_color'] ) );
 				if ( $now_value !== $new_value ) {
 					update_term_meta( $term_id, 'term_color', $new_value );
 				} else {
@@ -260,7 +283,7 @@ if ( ! class_exists( 'Vk_term_color' ) ) {
 				$term_name  = esc_html( $terms[0]->name );
 				$term_url   = esc_url( get_term_link( $terms[0]->term_id, $taxonomy ) );
 				$term_color = self::get_term_color( $terms[0]->term_id );
-				$term_color = ( $term_color ) ? ' style="color:#fff;background-color:' . $term_color . '"' : '';
+				$term_color = ( $term_color ) ? ' style="color:#fff;background-color:' . esc_attr( $term_color ) . '"' : '';
 
 				if ( $args['link'] ) {
 					$single_term_with_color .= '<a' . $outer_class . $term_color . ' href="' . esc_url( $term_url ) . '">';

@@ -125,4 +125,140 @@
 			display: none;
 		}
 	}
+
+	// 自動再生の停止・再生ボタン
+	// -----------------------------------------------------------------------------
+	// 自動再生はモバイルでも動くため、矢印のようにモバイルで非表示にはしない。
+	// グリフは #fff 固定（--swiper-navigation-color を借りると運営者が黒指定した時に黒地の黒になる）。
+	// 箱の寸法は Swiper の --swiper-navigation-size を借りずに自前で持つ。
+	// あちらが何を指すかは Swiper のバージョンで変わるため。
+	//   Swiper 11 : ::after の font-size（＝矢印グリフの寸法）。矢印ボタンの箱は
+	//               width: calc(var(--swiper-navigation-size) / 44 * 27) / height: 同値 で 27x44。
+	//   Swiper 12 / 14 : width と height の両方が同値（＝矢印ボタンの箱そのもの）で 44x44。
+	// つまり借りると、Swiper を更新した瞬間にこのボタンの寸法の意味が変わってしまう。
+	// & で包んでいるのは、ネストされたルールの後に宣言を置くと Sass が
+	// mixed-decls の警告を出すため。
+	& {
+		// 44px は WCAG 2.5.5（AAA）のターゲットサイズも満たす寸法。
+		// これは当たり判定の箱の寸法で、塗りの円はこれより一回り小さく描く（下記）。
+		--ltg-slide-autoplay-toggle-size: 44px;
+		// 塗りの円を当たり判定の箱より内側に描くための余白。
+		// 矢印は 44px の箱の中央に 13px 程度の細い線を描いているだけなので、
+		// 箱の右端が一致していても、塗りつぶしの円を箱いっぱいに描くと
+		// このボタンだけが矢印より右下へ飛び出して見える。
+		// 箱は 44px のまま縮めずに塗りだけを内側へ寄せ、見た目の位置を矢印へ近づける。
+		// 中心は元から矢印と一致しているため、縮めるほど見かけの差は小さくなる。
+		// 完全に一致させるには円の直径を矢印の線幅（13px 程度）まで縮める必要があり、
+		// それではグリフが読めなくなるため、操作子として成立する範囲で寄せている。
+		// 矢印の寸法変数（--ltg-slide-arrow-size）に連動させないのは、
+		// あちらが em で利用先ごとに解決される値で、px の余白として使えないため。
+		--ltg-slide-autoplay-toggle-inset: 5px;
+	}
+	&-autoplay-toggle {
+		position: absolute;
+		// 右と下で同じ値を使い、角から等距離に置く。
+		// Swiper はこの変数を定義せず各ルールでフォールバックしているだけなので、
+		// フォールバック値は Swiper 側と揃える必要がある。この値も版で違い、
+		// Swiper 11 は 10px・Swiper 12 以降は 4px。ここは 12 以降に合わせている。
+		// ずれると矢印との右端が揃わなくなるため、Swiper を戻す・上げる時は追随させる。
+		right: var(--swiper-navigation-sides-offset, 4px);
+		bottom: var(--swiper-navigation-sides-offset, 4px);
+		// .swiper-pagination は幅100%・z-index: 10 の帯で、DOM 順があとなので
+		// 同値だとボタンの当たり判定を奪われる。そのため 1 つ上に置く。
+		z-index: 11;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: var(--ltg-slide-autoplay-toggle-size);
+		height: var(--ltg-slide-autoplay-toggle-size);
+		// グリフは箱に対する比率で導出し、箱を縮めてもはみ出さないようにする（44px の箱で 18px）。
+		font-size: calc(var(--ltg-slide-autoplay-toggle-size) / 44 * 18);
+		// padding で塗りを内側へ寄せる。
+		// border-box なので当たり判定の箱は 44px のまま変わらず、
+		// background-clip: content-box で塗りだけが padding の分だけ小さくなる。
+		// border-radius は境界の箱に対する指定だが、content-box へ切り抜く際に
+		// 角丸も padding の分だけ縮むため、塗りは一回り小さい正円になる。
+		padding: var(--ltg-slide-autoplay-toggle-inset);
+		border: none;
+		border-radius: 50%;
+		// どんな画像の上でも白いグリフとのコントラストを 4.5:1 以上に保てる濃度
+		background-color: rgb(0 0 0 / 0.55);
+		background-clip: content-box;
+		cursor: pointer;
+		// display: flex が [hidden] の display: none に勝ってしまうので明示する
+		&[hidden] {
+			display: none;
+		}
+		svg {
+			display: block;
+			width: 1em;
+			height: 1em;
+			fill: #fff;
+		}
+		&:hover,
+		&:focus-visible {
+			background-color: rgb(0 0 0 / 0.75);
+		}
+		// 白い画像の上でリングが消えないよう、輪郭を円の内側に描く。
+		// outline は当たり判定の箱に対して描かれるため、塗りを内側へ寄せた分も
+		// 合わせて引かないと、リングが円の外側の透明な領域に浮いてしまう。
+		&:focus-visible {
+			outline: 2px solid #fff;
+			outline-offset: calc(-1 * (var(--ltg-slide-autoplay-toggle-inset) + 4px));
+		}
+	}
+
+	/* ページネーション
+	   ========================================================================== */
+
+	// 非アクティブ = 8px の円 / アクティブ = 横長のピル。
+	// 不透明度差ではなく形で現在位置を示す。半透明の塗りは、背景輝度が塗りの見かけの
+	// 輝度に近づく点でコントラストが最小になり、同じ不透明度で影も薄まって影による救済も
+	// 効かなくなるため、中間調の背景で 3:1 を割る（不透明度をどう選んでも谷は移動する
+	// だけで消えない）。そのため塗りは全ドット不透明にし、状態の差は幅と角丸に持たせる。
+	//
+	// 副産物として、形の差は強制カラーモードでも残る。background-color はシステム色に
+	// 強制されて塗りの差が消えるが、幅と角丸は強制されないため現在位置が読める。
+	// 不透明度差では担保できなかった性質。
+	//
+	// :where() で包まないのは、読み込み順に依存させず詳細度で確実に勝たせるため。
+	// Swiper 側と同値の (0,1,0) まで落とすと、どちらが先に出力されるかで結果が変わる。
+	// .ltg-slide への限定は目的上そもそも必要で、(0,2,0) はその帰結。
+	//
+	// 塗りとサイズをカスタムプロパティの指定（ltg-g3-slider/config.php）だけに頼らず、
+	// ここで実際のプロパティとして当て直している。VK Blocks Pro が
+	// `.swiper-pagination-bullet`（詳細度 (0,1,0)・`.vk_slider` に限定していない）へ
+	// `background-color` `width` `height` `border-radius` `opacity` を直接指定しており、
+	// ページ内のすべての Swiper のドットに効くため。
+	// カスタムプロパティは Swiper 自身のルール（同じ (0,1,0)）の中でしか読まれず、
+	// そのルールは後から読み込まれる VK Blocks Pro 側にソース順で負ける。結果、
+	// Lightning 側が値を指定しても塗りと形が VK Blocks Pro のもの（灰色の横長バー）になり、
+	// アクティブなドットだけが非アクティブより細い中途半端な見た目になっていた。
+	//
+	// 値そのものはカスタムプロパティから読んでいるので、指定の出どころは config.php のまま
+	// 1 か所に保たれる。ここで増やしているのは「どの詳細度で当てるか」だけ。
+	.swiper-pagination-bullet {
+		width: var(--swiper-pagination-bullet-width, var(--swiper-pagination-bullet-size, 8px));
+		height: var(--swiper-pagination-bullet-height, var(--swiper-pagination-bullet-size, 8px));
+		border-radius: 50%;
+		background-color: var(--swiper-pagination-bullet-inactive-color, #fff);
+		opacity: var(--swiper-pagination-bullet-inactive-opacity, 1);
+
+		// アクティブなドットは常に 1 個なので列の総幅は変わらず、切り替わるときに動くのは
+		// 入れ替わる 2 個の境界だけ（縮む側の右端と伸びる側の左端が 14px ずつ）。
+		// それでも 0ms だと一段跳びのガタつきに見えるため、幅の変化を補間して
+		// 「現在位置が次へ受け渡された」という手がかりとして読めるようにする。
+		// 縮む側も同時に補間しないと片側だけ滑って不自然になるので、-active ではなく
+		// 全ドットに指定する。
+		@media (prefers-reduced-motion: no-preference) {
+			transition: width 0.2s ease;
+		}
+
+		&-active {
+			width: calc(var(--swiper-pagination-bullet-width, var(--swiper-pagination-bullet-size, 8px)) * 2.75);
+			border-radius: calc(var(--swiper-pagination-bullet-height, var(--swiper-pagination-bullet-size, 8px)) / 2);
+			background-color: var(--swiper-pagination-color, #fff);
+			opacity: 1;
+		}
+	}
 }

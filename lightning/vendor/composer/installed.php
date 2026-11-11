@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'vektor-inc/lightning',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => 'e918775d7f2595132a05baf146dd0d42b04cafb5',
+        'pretty_version' => '15.43.0',
+        'version' => '15.43.0.0',
+        'reference' => '5af082dbd96e000a00aaa4d849c09f63e905475b',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'vektor-inc/lightning' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => 'e918775d7f2595132a05baf146dd0d42b04cafb5',
+            'pretty_version' => '15.43.0',
+            'version' => '15.43.0.0',
+            'reference' => '5af082dbd96e000a00aaa4d849c09f63e905475b',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -92,9 +92,9 @@
             'dev_requirement' => false,
         ),
         'vektor-inc/vk-term-color' => array(
-            'pretty_version' => '0.7.1',
-            'version' => '0.7.1.0',
-            'reference' => '032a2d21af115845ef82b6ceb6d19096b51b32a5',
+            'pretty_version' => '0.7.4',
+            'version' => '0.7.4.0',
+            'reference' => '25fe21c6c698997623086c1276cc5bf0d55e9345',
             'type' => 'library',
             'install_path' => __DIR__ . '/../vektor-inc/vk-term-color',
             'aliases' => array(),
